@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Atualizar Ordem de Serviço</h1>
+    <div class="labels">
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um Médico</mat-label>
+            <mat-select [formControl]="medico" [(ngModel)]="selMedico" class="mat-elevation-z8" [(value)]="os.medico" required>
+                <mat-option *ngFor="let med of medicos" value="{{med.id}}">{{med.nome}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="convenio.invalid">{{ validaMedico() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um paciente</mat-label>
+            <mat-select [formControl]="paciente" [(ngModel)]="selPaciente" class="mat-elevation-z8" [(value)]="os.paciente" required>
+                <mat-option *ngFor="let pac of pacientes" value="{{pac.id}}">{{pac.nome}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="convenio.invalid">{{ validaPaciente() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um Posto de Coleta</mat-label>
+            <mat-select [formControl]="postocoleta" [(ngModel)]="selPostoColeta" class="mat-elevation-z8" [(value)]="os.postocoleta" required>
+                <mat-option *ngFor="let pos of postocoletas" value="{{pos.id}}">{{pos.descricao}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="convenio.invalid">{{ validaPostoColeta() }}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="labels">
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Convênio</mat-label>
+            <input matInput [formControl]="convenio" [(ngModel)]="os.convenio" placeholder="Ex. Bradesco" [(ngModel)]="os.convenio" required>
+            <mat-error *ngIf="convenio.invalid">{{ validaConvenio() }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Exames</mat-label>
+            <mat-select [formControl]="examesList" multiple [(ngModel)]="exameL">
+                <mat-option *ngFor="let exame of exames" [value]="exame.id">{{exame.descricao}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <button (click)="update()" [disabled]="validaConvenio() || validaPostoColeta() || validaMedico() || validaPaciente()" class="mat-elevation-z8" mat-stroked-button color="accent">Atualizar</button>
+    <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn">Cancelar</button>
+</div>

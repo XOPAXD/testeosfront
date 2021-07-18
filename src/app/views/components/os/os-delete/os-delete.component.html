@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Atualizar Ordem de Serviço</h1>
+    <div class="labels">
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um Médico</mat-label>
+            <mat-select [(ngModel)]="selMedico" class="mat-elevation-z8" [(value)]="os.medico">
+                <mat-option *ngFor="let med of medicos" value="{{med.id}}" disabled>{{med.nome}}</mat-option>
+            </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um paciente</mat-label>
+            <mat-select [(ngModel)]="selPaciente" class="mat-elevation-z8" [(value)]="os.paciente">
+                <mat-option *ngFor="let pac of pacientes" value="{{pac.id}}" disabled>{{pac.nome}}</mat-option>
+            </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Selecione um Posto de Coleta</mat-label>
+            <mat-select [(ngModel)]="selPostoColeta" class="mat-elevation-z8" [(value)]="os.postocoleta">
+                <mat-option *ngFor="let pos of postocoletas" value="{{pos.id}}" disabled>{{pos.descricao}}</mat-option>
+            </mat-select>
+
+        </mat-form-field>
+    </div>
+
+    <div class="labels">
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Convênio</mat-label>
+            <input matInput [(ngModel)]="os.convenio" disabled>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Exames</mat-label>
+            <mat-select multiple [(ngModel)]="exameL">
+                <mat-option *ngFor="let exame of exames" [value]="exame.id">{{exame.descricao}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <button (click)="delete()" class="mat-elevation-z8" mat-stroked-button color="accent">Excluir</button>
+    <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn">Cancelar</button>
+</div>
