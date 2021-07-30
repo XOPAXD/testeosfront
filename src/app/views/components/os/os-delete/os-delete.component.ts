@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exame } from 'src/app/models/exame';
@@ -18,7 +18,7 @@ import { PostocoletaService } from 'src/app/services/postocoleta.service';
   templateUrl: './os-delete.component.html',
   styleUrls: ['./os-delete.component.css']
 })
-export class OsDeleteComponent implements OnInit {
+export class OsDeleteComponent implements AfterContentInit {
 
   selMedico = '';
   selPaciente = '';
@@ -32,11 +32,13 @@ export class OsDeleteComponent implements OnInit {
     convenio:''
   }
 
-  exameL: OsExame = {
-    id :  '',
-    exame_id:'',
-    os_id:''
+  objExamesDlt: OsExame = {
+    id:'',
+    exame:'',
+    os:''
   }
+
+  objExames: OsExame[] = []
 
 
   medicos      : Medico[] = []
@@ -55,9 +57,10 @@ export class OsDeleteComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute) { }
 
-  ngOnInit(): void {
+    ngAfterContentInit(): void {
     this.os.id = this.route.snapshot.paramMap.get('id');
 
+    this.ListarExamesOs();
     this.findByid();
     this.listarPacientes();
     this.listarMedicos();
@@ -69,6 +72,12 @@ export class OsDeleteComponent implements OnInit {
     this.osservice.update(this.os).subscribe(resposta => {
       this.osservice.message("Ordem de Serviço Atualizada com sucesso!")
       this.router.navigate(['os'])
+    })
+  }
+
+  ListarExamesOs():void{
+    this.osservice.getAllExamesByOsId(this.os.id).subscribe(resposta => {
+      this.objExames = resposta;   
     })
   }
 
@@ -84,6 +93,20 @@ export class OsDeleteComponent implements OnInit {
   }
 
   delete():void{
+    this.exames.map(checkbox => checkbox.id).filter(checkbox => checkbox.checked == true);
+    //console.log(this.exames);
+    this.exames.forEach(element => {
+      if(element.checked){
+        this.objExamesDlt.exame = element.id
+        this.objExamesDlt.os    = this.os.id
+       // console.log(this.objExames);
+        this.osservice.dltOsExame(this.objExamesDlt).subscribe(resp => {
+          this.osservice.message("Ordem de Serviço Atualizada com sucesso!")
+          this.router.navigate(['os'])
+        })
+      }
+    }); 
+
     this.osservice.delete(this.os.id).subscribe(resposta => {
       this.router.navigate(['os']);
       this.osservice.message('Registro Excluido com Sucesso!');
@@ -113,6 +136,15 @@ export class OsDeleteComponent implements OnInit {
   listarExames():void{
     this.exameservice.examefindAll().subscribe(resposta => {
       this.exames = resposta;
+
+      this.exames.forEach(element =>{
+        this.objExames.forEach(x => {
+          
+          if(element.id == x.exame){
+            element.checked = true
+          }
+        })
+      })
     })
   }
 

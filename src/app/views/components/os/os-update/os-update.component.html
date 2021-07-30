@@ -26,21 +26,19 @@
         </mat-form-field>
     </div>
 
-    <div class="labels">
 
+    <section class="checkbox-section">
+        <div class="col-sm-12">
+            <mat-label><b>Exames</b></mat-label>
+        </div>
+        <mat-checkbox *ngFor="let exame of exames" [(ngModel)]="exame.checked" name="exames" value="exame.id" type="checkbox">{{exame.descricao}} </mat-checkbox>
+    </section>
+    <div class="labels">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Convênio</mat-label>
             <input matInput [formControl]="convenio" [(ngModel)]="os.convenio" placeholder="Ex. Bradesco" [(ngModel)]="os.convenio" required>
             <mat-error *ngIf="convenio.invalid">{{ validaConvenio() }}</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Exames</mat-label>
-            <mat-select [formControl]="examesList" multiple [(ngModel)]="exameL">
-                <mat-option *ngFor="let exame of exames" [value]="exame.id">{{exame.descricao}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
     </div>
     <button (click)="update()" [disabled]="validaConvenio() || validaPostoColeta() || validaMedico() || validaPaciente()" class="mat-elevation-z8" mat-stroked-button color="accent">Atualizar</button>
     <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn">Cancelar</button>

@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
@@ -52,6 +53,7 @@ import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.com
     AppRoutingModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
     MatListModule,

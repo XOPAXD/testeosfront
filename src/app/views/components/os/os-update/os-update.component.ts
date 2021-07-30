@@ -1,3 +1,4 @@
+import { AfterContentInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +19,7 @@ import { PostocoletaService } from 'src/app/services/postocoleta.service';
   templateUrl: './os-update.component.html',
   styleUrls: ['./os-update.component.css']
 })
-export class OsUpdateComponent implements OnInit {
+export class OsUpdateComponent implements AfterContentInit {
 
   selMedico = '';
   selPaciente = '';
@@ -32,11 +33,13 @@ export class OsUpdateComponent implements OnInit {
     convenio:''
   }
 
-  exameL: OsExame = {
-    id :  '',
-    exame_id:'',
-    os_id:''
+  objExamesUpd: OsExame = {
+    id:'',
+    exame:'',
+    os:''
   }
+
+  objExames: OsExame[] = []
 
 
   medicos      : Medico[] = []
@@ -59,21 +62,34 @@ export class OsUpdateComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.os.id = this.route.snapshot.paramMap.get('id');
 
+    this.ListarExamesOs();
     this.findByid();
     this.listarPacientes();
     this.listarMedicos();
     this.listarPostosColeta();
     this.listarExames();
+    
   }
 
   update():void{
     this.osservice.update(this.os).subscribe(resposta => {
-      this.osservice.message("Ordem de Serviço Atualizada com sucesso!")
-      this.router.navigate(['os'])
-    })
+      this.exames.map(checkbox => checkbox.id).filter(checkbox => checkbox.checked == true);
+      //console.log(this.exames);
+      this.exames.forEach(element => {
+        if(element.checked){
+          this.objExamesUpd.exame = element.id
+          this.objExamesUpd.os    = this.os.id
+         // console.log(this.objExames);
+          this.osservice.updOsExame(this.objExamesUpd).subscribe(resp => {
+            this.osservice.message("Ordem de Serviço Atualizada com sucesso!")
+            this.router.navigate(['os'])
+          })
+        }
+      }); 
+    });
   }
 
   findByid():void{
@@ -85,7 +101,13 @@ export class OsUpdateComponent implements OnInit {
       this.selPostoColeta = resposta.postocoleta.toString();
       
     })
-}
+  }
+
+  ListarExamesOs():void{
+    this.osservice.getAllExamesByOsId(this.os.id).subscribe(resposta => {
+      this.objExames = resposta;   
+    })
+  }
 
   listarPacientes():void{
     this.pacienteservice.findAll().subscribe(resposta => {
@@ -108,6 +130,15 @@ export class OsUpdateComponent implements OnInit {
   listarExames():void{
     this.exameservice.examefindAll().subscribe(resposta => {
       this.exames = resposta;
+
+      this.exames.forEach(element =>{
+        this.objExames.forEach(x => {
+          
+          if(element.id == x.exame){
+            element.checked = true
+          }
+        })
+      })
     })
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { merge } from 'rxjs/internal/observable/merge';
 import { Exame } from 'src/app/models/exame';
 import { Medico } from 'src/app/models/medico';
 import { OS } from 'src/app/models/os';
@@ -28,11 +29,13 @@ export class OsCreateComponent implements OnInit {
     convenio:''
   }
 
-  exameL: OsExame = {
-    id :  '',
-    exame_id:'',
-    os_id:''
+  objExames: OsExame = {
+      id:'',
+      exame:'',
+      os:''
   }
+
+  exameL: OsExame[] = []
 
   
 
@@ -63,11 +66,30 @@ export class OsCreateComponent implements OnInit {
   }
 
   create():void{
-    console.log(this.os);
-    console.log(this.exameL);
+    
+    
     this.osservice.create(this.os).subscribe(resposta => {
-      this.osservice.message("Ordem de Serviço Criada com sucesso!")
-      
+      //this.osservice.message("Ordem de Serviço Criada com sucesso!")
+      this.exames.map(checkbox => checkbox.id).filter(checkbox => checkbox.checked == true);
+      console.log(this.exames);
+      this.exames.forEach(element => {
+        if(element.checked){
+          this.objExames.exame = element.id
+          console.log(this.objExames);
+          this.osservice.createOsExame(this.objExames).subscribe(resp => {
+            this.osservice.message("Ordem de Serviço Criada com sucesso!")
+            this.router.navigate(['os'])
+          })
+        }
+      }); 
+    });
+  }
+
+  FindOsLastId(){
+    this.osservice.FindOsLastId().subscribe(resposta =>{
+      this.os = resposta;
+      console.log(" no find .:"+this.os.convenio)
+      return this.os.id
     })
   }
 

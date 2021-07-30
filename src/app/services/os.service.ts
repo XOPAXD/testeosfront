@@ -21,12 +21,36 @@ export class OsService {
       return this.http.get<OS[]>(url);
     }
 
+    FindOsLastId():Observable<OS>{
+      const url = this.baseURL + "";
+      return this.http.get<OS>(url);
+    }
+
+    getAllExamesByOsId(id:any):Observable<OsExame[]>{
+      const url = this.baseURL + "/os/exames/"+id;
+      return this.http.get<OsExame[]>(url);
+    }
+
     create(os:OS):Observable<OS>{
       const url = this.baseURL + "";
       return this.http.post<OS>(url,os);
     }
 
+    createOsExame(osexame:OsExame):Observable<OsExame>{
+      const url = this.baseURL + "/osexame";
+      return this.http.post<OsExame>(url,osexame);
+    }
     
+    updOsExame(osexame:OsExame):Observable<OsExame>{
+      const url = this.baseURL + "/osexame/upd";
+      return this.http.post<OsExame>(url,osexame);
+    }
+
+    dltOsExame(osexame:OsExame):Observable<OsExame>{
+      const url = this.baseURL + "/osexame/dlt";
+      return this.http.post<OsExame>(url,osexame);
+    }
+
     findById(id:any):Observable<OS>{
       const url = this.baseURL + "/"+id;
       return this.http.get<OS>(url);
