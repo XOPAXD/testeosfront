@@ -5,12 +5,13 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OS } from '../models/os';
 import { OsExame } from '../models/osexame';
+import { Paciente } from '../models/paciente';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OsService {
-
+  
   baseURL : String = environment.baseURL;
 
   constructor(private http : HttpClient,
@@ -34,6 +35,11 @@ export class OsService {
     create(os:OS):Observable<OS>{
       const url = this.baseURL + "";
       return this.http.post<OS>(url,os);
+    }
+
+    createPatiente(form:any){
+      const url = "http://httpbin.org/post";
+      return this.http.post(url,JSON.stringify(form.value));
     }
 
     createOsExame(osexame:OsExame):Observable<OsExame>{

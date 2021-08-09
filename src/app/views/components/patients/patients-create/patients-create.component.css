@@ -1,0 +1,13 @@
+.container {
+    width: 90%;
+    margin: 1rem auto 0 auto;
+}
+
+.labels {
+    display: flex;
+    justify-content: space-between;
+}
+
+.full-width {
+    width: 100%;
+}

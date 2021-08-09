@@ -1,0 +1,49 @@
+<div class="container">
+    <Form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="nome">
+            </mat-form-field>
+            <mat-error *ngIf="this.formulario.get('nome').invalid">{{ validaNome() }}</mat-error>
+        </div>
+
+
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput formControlName="dataNasc" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Sexo</mat-label>
+            <select matNativeControl formControlName="sexo">
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Endereco</mat-label>
+            <input matInput formControlName="endereco">
+
+        </mat-form-field>
+
+        <div class="form-group">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email">
+            </mat-form-field>
+            <mat-error *ngIf="this.formulario.get('nome').invalid">{{ validaEmail() }}</mat-error>
+        </div>
+
+        <button class="mat-elevation-z8" mat-stroked-button color="accent">Criar</button>
+        <button (click)="resetar()" class="mat-elevation-z8" mat-stroked-button>Cancelar</button>
+    </Form>
+
+
+
+</div>

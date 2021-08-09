@@ -31,7 +31,13 @@ import { NavComponent } from './views/components/template/nav/nav.component';
 import { OsReadComponent } from './views/components/os/os-read/os-read.component';
 import { OsCreateComponent } from './views/components/os/os-create/os-create.component';
 import { OsUpdateComponent } from './views/components/os/os-update/os-update.component';
-import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.component'; 
+import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.component';
+import { PatientsReadComponent } from './views/components/patients/patients-read/patients-read.component';
+import { PatientsCreateComponent } from './views/components/patients/patients-create/patients-create.component';
+import { PatientsUpdateComponent } from './views/components/patients/patients-update/patients-update.component';
+import { PatientsDeleteComponent } from './views/components/patients/patients-delete/patients-delete.component'; 
+import { MatNativeDateModule } from '@angular/material/core';
+import { TemplateFormComponent } from './views/components/template-drive/template-form/template-form.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +49,12 @@ import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.com
     OsReadComponent,
     OsCreateComponent,
     OsUpdateComponent,
-    OsDeleteComponent
+    OsDeleteComponent,
+    PatientsReadComponent,
+    PatientsCreateComponent,
+    PatientsUpdateComponent,
+    PatientsDeleteComponent,
+    TemplateFormComponent
   ],
   imports: [
     RouterModule,
@@ -58,6 +69,7 @@ import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.com
     MatButtonModule,
     MatListModule,
     MatCardModule,
+    MatNativeDateModule,
     MatTableModule,
     MatSelectModule,
     MatInputModule,
@@ -67,7 +79,8 @@ import { OsDeleteComponent } from './views/components/os/os-delete/os-delete.com
     ReactiveFormsModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
