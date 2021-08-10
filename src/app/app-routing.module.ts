@@ -11,6 +11,7 @@ import { PatientsCreateComponent } from './views/components/patients/patients-cr
 import { PatientsUpdateComponent } from './views/components/patients/patients-update/patients-update.component';
 import { PatientsDeleteComponent } from './views/components/patients/patients-delete/patients-delete.component'; 
 import { TemplateFormComponent } from './views/components/template-drive/template-form/template-form.component';
+import { CampoControlErroComponent } from './views/components/campo-control-erro/campo-control-erro/campo-control-erro.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
     path: 'template-drive',
     component: TemplateFormComponent
   },
+  {
+    path: 'campo-control',
+    component: CampoControlErroComponent
+  },
+  
 ];
 
 @NgModule({

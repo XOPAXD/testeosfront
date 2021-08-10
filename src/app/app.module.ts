@@ -37,7 +37,10 @@ import { PatientsCreateComponent } from './views/components/patients/patients-cr
 import { PatientsUpdateComponent } from './views/components/patients/patients-update/patients-update.component';
 import { PatientsDeleteComponent } from './views/components/patients/patients-delete/patients-delete.component'; 
 import { MatNativeDateModule } from '@angular/material/core';
-import { TemplateFormComponent } from './views/components/template-drive/template-form/template-form.component';
+import { TemplateFormModule } from './views/components/template-drive/template-form/template-form.module';
+
+//import { CampoControlErroComponent } from './views/components/campo-control-erro/campo-control-erro/campo-control-erro.component';
+//import { CampoControlErroModule } from './views/components/campo-control-erro/campo-control-erro/campo-control-erro.module';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,7 @@ import { TemplateFormComponent } from './views/components/template-drive/templat
     PatientsCreateComponent,
     PatientsUpdateComponent,
     PatientsDeleteComponent,
-    TemplateFormComponent
+    //CampoControlErroComponent
   ],
   imports: [
     RouterModule,
@@ -80,7 +83,8 @@ import { TemplateFormComponent } from './views/components/template-drive/templat
     MatPaginatorModule,
     MatSnackBarModule,
     MatMenuModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TemplateFormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
