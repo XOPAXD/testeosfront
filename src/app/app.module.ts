@@ -38,7 +38,7 @@ import { PatientsUpdateComponent } from './views/components/patients/patients-up
 import { PatientsDeleteComponent } from './views/components/patients/patients-delete/patients-delete.component'; 
 import { MatNativeDateModule } from '@angular/material/core';
 import { TemplateFormModule } from './views/components/template-drive/template-form/template-form.module';
-
+import { NgxViacepModule } from "@brunoc/ngx-viacep";
 //import { CampoControlErroComponent } from './views/components/campo-control-erro/campo-control-erro/campo-control-erro.component';
 //import { CampoControlErroModule } from './views/components/campo-control-erro/campo-control-erro/campo-control-erro.module';
 
@@ -84,7 +84,8 @@ import { TemplateFormModule } from './views/components/template-drive/template-f
     MatSnackBarModule,
     MatMenuModule,
     ReactiveFormsModule,
-    TemplateFormModule
+    TemplateFormModule,
+    NgxViacepModule
   ],
   providers: [],
   bootstrap: [AppComponent]
