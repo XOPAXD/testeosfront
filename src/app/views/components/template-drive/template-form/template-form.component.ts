@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Estado } from 'src/app/models/estado';
+import { ConsultaCepService } from 'src/app/services/consulta-cep.service';
+import { EstadoService } from 'src/app/services/estado.service';
 
 
 @Component({
@@ -9,17 +12,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateFormComponent implements OnInit {
   
+  estados : Estado[] = [];
+
   usuario:any = {
     nome:null,
     email:null
   }
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private cepService:ConsultaCepService,
+              private estadoService: EstadoService) { }
 
   ngOnInit(): void {
+    this.estadoService.getEstadosBr().subscribe(dados =>{
+      this.estados = dados;
+      console.log(" estados.:"+JSON.stringify(dados))
+    })
   }
   onSubmit(form:any){
     console.log(form);
     console.log(this.usuario);
+
+    this.http.post('http://httpbin.org/post',JSON.stringify(form.value)).subscribe(
+      dadaos => console.log(dadaos)
+    );
   }
 
   VerificaValidtouched(campo:any){
@@ -38,14 +53,13 @@ export class TemplateFormComponent implements OnInit {
     //cep = cep.replace(/\D/g,'');
     this.resetaDadosForm(form);
 
-    if(cep != ""){
+    if(cep !== "" && cep != null){
       console.log(" aquiiii 1");
       var validacep = /^[0-9]{8}$/;
 
       //if(validacep.test(cep)){
         console.log(" aquiiii 2");
-          this.http.get(`//viacep.com.br/ws/${cep.value}/json/`)
-          
+          this.cepService.ConsultaCep(cep)
           .subscribe(dados =>{
             console.log(" aquiiii"+JSON.stringify(dados));
             this.populaDadosForm(dados,form)

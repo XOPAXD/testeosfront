@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Estado } from 'src/app/models/estado';
+
 import { OsService } from 'src/app/services/os.service';
+import { EstadoService } from 'src/app/services/estado.service';
 
 @Component({
   selector: 'app-patients-create',
@@ -12,11 +15,12 @@ import { OsService } from 'src/app/services/os.service';
 export class PatientsCreateComponent implements OnInit {
   
   formulario:any
-  
+  estados : Estado[] = [];
 
   constructor(private formBuilder:FormBuilder,
               private http : HttpClient,
-              private osservice:OsService ) { }
+              private osservice:OsService,
+              private estadoService: EstadoService) { }
 
   ngOnInit(): void {
     /*this.formulario = new FormGroup({
@@ -28,13 +32,19 @@ export class PatientsCreateComponent implements OnInit {
       endereco:new FormControl(null)
     });*/
     
+
+    this.estadoService.getEstadosBr().subscribe(dados =>{
+      this.estados = dados;
+      console.log(" estados.:"+JSON.stringify(dados))
+    })
  
     this.formulario = this.formBuilder.group({
       nome:[null,Validators.required,Validators.minLength(3),Validators.maxLength(500)],
       dataNasc:[null],
       sexo:[null],
       email:[null,[Validators.required,Validators.email]],
-      endereco:[null,Validators.required]
+      endereco:[null,Validators.required],
+      estado: [null, Validators.required]
     })
 
     console.log('no pac create'+this.formulario.value);

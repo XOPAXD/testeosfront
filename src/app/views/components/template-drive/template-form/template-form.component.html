@@ -66,7 +66,10 @@
 
                 <div class="col-md-3" [ngClass]="aplicaCssErro(estado)">
                     <label for="estado" class="control-label">Estado</label>
-                    <input type="text" class="form-control" id="estado" name="estado" ngModel required #estado="ngModel" readonly>
+                    <label>Estados</label>
+                    <select class="form-control" id="estado" name="estado" ngModel required #estado="ngModel" readonly>
+                        <option *ngFor="let estado of estados" [value]="estado.sigla">{{estado.nome}}</option>
+                    </select>
                     <div class="alert alert-danger" *ngIf="!estado.valid && estado.touched">O Estado é Obrigatório</div>
                 </div>
             </div>

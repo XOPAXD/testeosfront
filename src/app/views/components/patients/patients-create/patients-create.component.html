@@ -6,7 +6,7 @@
                 <mat-label>Nome</mat-label>
                 <input matInput formControlName="nome">
             </mat-form-field>
-            <mat-error *ngIf="this.formulario.get('nome').invalid">{{ validaNome() }}</mat-error>
+            <mat-error *ngIf="this.formulario.get('nome').invalid && this.formulario.get('nome').touched">{{ validaNome() }}</mat-error>
         </div>
 
 
@@ -34,10 +34,19 @@
 
         <div class="form-group">
             <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Estados</mat-label>
+                <mat-select class="form-control" id="estado" formControlName="estado">
+                    <mat-option *ngFor="let estado of estados" [value]="estado.sigla">{{estado.nome}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="email" type="email">
             </mat-form-field>
-            <mat-error *ngIf="this.formulario.get('nome').invalid">{{ validaEmail() }}</mat-error>
+            <mat-error *ngIf="this.formulario.get('email').invalid && this.formulario.get('email').touched">{{ validaEmail() }}</mat-error>
         </div>
 
         <button class="mat-elevation-z8" mat-stroked-button color="accent">Criar</button>
