@@ -47,12 +47,66 @@
                 <input matInput formControlName="email" type="email">
             </mat-form-field>
             <mat-error *ngIf="this.formulario.get('email').invalid && this.formulario.get('email').touched">{{ validaEmail() }}</mat-error>
+
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Cargo</mat-label>
+                <mat-select class="form-control" id="cargo" formControlName="cargo">
+                    <mat-option *ngFor="let cargo of cargos" [value]="cargo.nome">{{cargo.desc}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Tecnologias</mat-label>
+                <mat-select multiple class="form-control" id="tecnologia" formControlName="tecnologia">
+                    <mat-option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">{{tecnologia.desc}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <mat-label>Newsletter</mat-label>
+            <mat-radio-group class="full-width" appearance="fill" formControlName="newsletter" aria-label="Newsletter">
+                <mat-radio-button *ngFor="let item of newsletter" [value]="item.valor">{{ item.desc}}</mat-radio-button>
+            </mat-radio-group>
+
+            <section class="example-section">
+                <mat-checkbox formControlName="termos" class="example-margin">Aceito os termos</mat-checkbox>
+                <mat-error *ngIf="this.formulario.get('termos').invalid">{{ validaTermos() }}</mat-error>
+            </section>
+
+            <section class="example-section">
+                <mat-label>Frameworks</mat-label>
+                <div id="frameworks" class="row">
+                    <div class="checkbox" class="col-sm-4" *ngFor="let item of frameworks; let i = index">
+                        <label class="checkbox-inline">  
+                            <input type="checkbox" formControlName="frameworks" [value]="item.value" (change)="onCheckboxChange($event)">{{ item.name }}
+                        </label>
+                    </div>
+
+                </div>
+
+            </section>
         </div>
 
         <button class="mat-elevation-z8" mat-stroked-button color="accent">Criar</button>
         <button (click)="resetar()" class="mat-elevation-z8" mat-stroked-button>Cancelar</button>
+        <button (click)="setarCargo()" class="mat-elevation-z8 btn-info" mat-stroked-button>Cargo</button>
+        <button (click)="setarTecnologias()" class="mat-elevation-z8 btn-info" mat-stroked-button>Tecnologias</button>
     </Form>
 
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
+        <div *ngFor="let data of frameworks; let i=index">
+            <label>
+            <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
+            {{data.name}}
+          </label>
+        </div>
+
+        <p class="error" *ngIf="this.form.controls['checkArray'].errors?.required">
+            Checkbox is required, select atleast one value.
+        </p>
+
+        <input type="submit" value="Submit">
+    </form>
 
 </div>
